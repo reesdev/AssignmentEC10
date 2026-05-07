@@ -2,7 +2,7 @@
 
 class MedSyncAPI {
     constructor() {
-        this.baseUrl = 'http://localhost:8080/api/v1';
+        this.baseUrl = '/api/v1';
         this.authHeader = localStorage.getItem('auth_token') || '';
     }
 
