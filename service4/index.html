@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedSync Pulse | Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="app">
+
+        <header class="main-header">
+            <div class="logo">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="pulse-icon"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                <h1>MedSync <span>Pulse</span></h1>
+            </div>
+            <div class="gateway-info">
+                <div class="status-indicator online"></div>
+                <span id="gateway-url">Gateway: http://localhost:8080</span>
+            </div>
+            <div class="user-profile" id="user-profile">
+                <span id="username-display">Not Signed In</span>
+                <button id="logout-btn" class="hidden">Logout</button>
+            </div>
+        </header>
+
+        <main class="dashboard-grid">
+            <div class="sidebar-col">
+
+                <section class="card auth-card" id="auth-section">
+                    <div class="card-header">
+                        <div class="icon-box"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+                        <h2>Authentication</h2>
+                    </div>
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="login">Login</button>
+                        <button class="tab-btn" data-tab="register">Register</button>
+                    </div>
+                    <form id="login-form" class="auth-form">
+                        <div class="input-group">
+                            <input type="text" id="login-user" placeholder="Username" value="admin">
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="login-pass" placeholder="Password" value="admin123">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+                    </form>
+                    <div id="token-info" class="token-info hidden">
+                        <label>Current Token:</label>
+                        <div class="token-box">
+                            <code id="token-display">ey...</code>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="card logs-card">
+                    <div class="card-header">
+                        <div class="icon-box"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>
+                        <h2>System Logs</h2>
+                        <button id="clear-logs" class="btn-text">Clear</button>
+                    </div>
+                    <div id="log-container" class="log-container"></div>
+                </section>
+            </div>
+
+            <div class="main-col">
+
+                <section class="card patient-card">
+                    <div class="card-header">
+                        <div class="icon-box"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+                        <h2>Patient Management <span class="badge">SERVICE 1</span></h2>
+                        <button id="refresh-patients" class="btn-secondary btn-sm">Refresh List</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="input-group"><label>New Patient</label><input type="text" id="p-name" placeholder="Patient Name"></div>
+                            <div class="input-group"><label>&nbsp;</label><input type="text" id="p-nik" placeholder="NIK-xxxxxxxxxxxx"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group"><select id="p-gender"><option value="Male">Male</option><option value="Female">Female</option></select></div>
+                            <div class="input-group"><input type="text" id="p-phone" placeholder="Phone"></div>
+                        </div>
+                        <button id="create-patient" class="btn btn-success">Create Patient</button>
+                        <div class="lookup-section">
+                            <div class="form-row align-end">
+                                <input type="number" id="lookup-id" placeholder="Patient ID" class="flex-1">
+                                <button id="get-patient" class="btn btn-secondary">Get</button>
+                                <button id="delete-patient" class="btn btn-danger">Delete</button>
+                            </div>
+                            <div id="patient-data-box" class="data-box">No data</div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="card bookings-card">
+                    <div class="card-header">
+                        <div class="icon-box"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div>
+                        <h2>Bookings <span class="badge">SERVICE 3</span></h2>
+                        <button id="refresh-bookings" class="btn-secondary btn-sm">Refresh List</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label>New Booking</label>
+                            <div class="form-row">
+                                <input type="number" id="b-patient-id" placeholder="Patient ID">
+                                <input type="number" id="b-room-id" placeholder="Room ID">
+                                <button id="book-btn" class="btn btn-primary">Book</button>
+                            </div>
+                        </div>
+                        <div class="lookup-section">
+                            <div class="form-row align-end">
+                                <input type="number" id="b-lookup-id" placeholder="Booking ID" class="flex-1">
+                                <button id="view-booking" class="btn-secondary btn-sm">View</button>
+                                <button id="checkout-booking" class="btn-success btn-sm">Checkout</button>
+                                <button id="cancel-booking" class="btn-danger btn-sm">Cancel</button>
+                            </div>
+                            <div id="booking-data-box" class="data-box">No data</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="stats-col">
+
+                <section class="card rooms-card">
+                    <div class="card-header">
+                        <div class="icon-box"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div>
+                        <h2>Rooms <span class="badge">SERVICE 3</span></h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="tabs-sm">
+                            <button class="tab-btn-sm active" data-filter="all">All Rooms</button>
+                            <button class="tab-btn-sm" data-filter="available">Available Only</button>
+                            <button class="tab-btn-sm" data-filter="add">Add Room</button>
+                        </div>
+                        <div id="rooms-data-box" class="data-box scrollable">No data</div>
+                        <div id="add-room-form" class="form-column hidden">
+                            <input type="text" id="r-number" placeholder="Room #">
+                            <select id="r-type"><option value="Regular">Regular</option><option value="VIP">VIP</option><option value="Suite">Suite</option></select>
+                            <input type="number" id="r-price" placeholder="Price">
+                            <button id="save-room-btn" class="btn btn-success btn-sm">Save Room</button>
+                        </div>
+                    </div>
+                </section>
+
+
+                <section class="card payments-card">
+                    <div class="card-header">
+                        <div class="icon-box"><svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></div>
+                        <h2>Payments <span class="badge">SERVICE 3</span></h2>
+                        <button id="refresh-payments" class="btn-secondary btn-sm">Refresh History</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <label>Process New Payment</label>
+                            <input type="number" id="pay-booking-id" placeholder="Booking ID">
+                            <div class="form-row">
+                                <select id="pay-type"><option value="Consultation">Consultation</option><option value="Medicine">Medicine</option><option value="Surgery">Surgery</option></select>
+                                <input type="number" id="pay-amount" placeholder="Amount">
+                            </div>
+                            <button id="process-payment" class="btn btn-primary btn-full">Process Payment</button>
+                        </div>
+                        <div id="payment-data-box" class="data-box scrollable">No payment history</div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="main-footer">
+            <p>&copy; 2026 MedSync Systems. Distributed Infrastructure.</p>
+        </footer>
+    </div>
+    <script type="module" src="/main.js"></script>
+</body>
+</html>
